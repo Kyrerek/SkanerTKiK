@@ -6,10 +6,11 @@ class Main {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Podaj wyrażenie: ");
-        String wyrazenie = input.nextLine();
+        String wyrazenie = input.nextLine().replaceAll("\\s+", "");
+        int i = 0;
 
-        for (char token : wyrazenie.toCharArray()) {
-            skaner.skaner(token);
+        while( i < wyrazenie.length()) {
+            i = skaner.skaner(wyrazenie, i);
         }
         System.out.println("EOF");
     }
