@@ -13,3 +13,5 @@ Tokeny:
 | DIV      | Znak dzielenia   |
 | LBRACKET | Lewy nawias      |
 | RBRACKET | Prawy nawias     |
+|ERR|Nieznany token|
+|EOF|Koniec ciągu tokenów|
