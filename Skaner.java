@@ -4,48 +4,61 @@ public class Skaner {
     }
 
     public int skaner(String ciag, int i) {
-        String kod = Character.toString(ciag.charAt(i));
-        if (Character.isLetter(ciag.charAt(i))) {
-            i++;
-            System.out.println(ciag.length());
-            while (i < ciag.length()) {
-                if (Character.isLetter(ciag.charAt(i)) || Character.isDigit(ciag.charAt(i))) {
-                    kod += Character.toString(ciag.charAt(i));
-                    i++;
-                } else {
-                    i--;
-                    break;
+        StringBuilder kodBuilder = new StringBuilder();
+        kodBuilder.append(ciag.charAt(i));
+
+        KodTokena kodTokena = switch (ciag.charAt(i)){
+            case '+' -> KodTokena.PLUS;
+            case '-' -> KodTokena.MINUS;
+            case '*' -> KodTokena.MULT;
+            case '/' -> KodTokena.DIV;
+            case '(' -> KodTokena.LBRACKET;
+            case ')' -> KodTokena.RBRACKET;
+            default -> {
+                if (Character.isLetter(ciag.charAt(i))) {
+                    i = pullIds(ciag,i,kodBuilder);
+                    yield KodTokena.ID;
                 }
-            }
-            System.out.println(KodTokena.ID + ": " + kod);
-        } else if (Character.isDigit(ciag.charAt(i))) {
-            i++;
-            while (i < ciag.length()) {
+
                 if (Character.isDigit(ciag.charAt(i))) {
-                    kod += Character.toString(ciag.charAt(i));
-                    i++;
-                } else {
-                    i--;
-                    break;
+                    i = pullNums(ciag,i,kodBuilder);
+                    yield KodTokena.NUM;
                 }
+
+                kodBuilder.append(", na pozycji ").append(i);
+                yield KodTokena.ERR;
             }
-            System.out.println(KodTokena.NUM + ": " + kod);
-        } else if (ciag.charAt(i) == '+') {
-            System.out.println(KodTokena.PLUS + ": " + kod);
-        } else if (ciag.charAt(i) == '-') {
-            System.out.println(KodTokena.MINUS + ": " + kod);
-        }  else if (ciag.charAt(i) == '*') {
-            System.out.println(KodTokena.MULT + ": " + kod);
-        }  else if (ciag.charAt(i) == '/') {
-            System.out.println(KodTokena.DIV + ": " + kod);
-        } else if (ciag.charAt(i) == '(') {
-            System.out.println(KodTokena.LBRACKET + ": " + kod);
-        } else if (ciag.charAt(i) == ')') {
-            System.out.println(KodTokena.RBRACKET + ": " + kod);
-        } else{
-            System.out.println(KodTokena.ERR + ": "+ kod+", na pozycji "+i);
-        }
+        };
+        System.out.println(kodTokena + ": " + kodBuilder);
         return ++i;
+    }
+
+    private int pullNums(String ciag, int i, StringBuilder kodBuilder) {
+        i++;
+        while (i < ciag.length()) {
+            if (Character.isDigit(ciag.charAt(i))) {
+                kodBuilder.append(ciag.charAt(i));
+                i++;
+            } else {
+                i--;
+                break;
+            }
+        }
+        return i;
+    }
+
+    private int pullIds(String ciag, int i, StringBuilder kodBuilder) {
+        i++;
+        while (i < ciag.length()) {
+            if (Character.isLetter(ciag.charAt(i)) || Character.isDigit(ciag.charAt(i))) {
+                kodBuilder.append(ciag.charAt(i));
+                i++;
+            } else {
+                i--;
+                break;
+            }
+        }
+        return i;
     }
 
 }
