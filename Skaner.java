@@ -4,7 +4,7 @@ public class Skaner {
     }
 
     public void skaner(char token){
-
+        System.out.println(token);
     }
 
 }
