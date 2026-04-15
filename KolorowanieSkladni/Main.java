@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) {
         Skaner skaner = new Skaner();
-        File entry = new File("kod.txt");
-        HTMLCreator htmlCreator = new HTMLCreator("kod.html");
+        File entry = new File("KolorowanieSkladni/kod.txt");
+        HTMLCreator htmlCreator = new HTMLCreator("KolorowanieSkladni/kod.html");
         try (Scanner myReader = new Scanner(entry)) {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
