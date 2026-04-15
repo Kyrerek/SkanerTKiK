@@ -1,0 +1,5 @@
+package KolorowanieSkladni;
+
+public enum KodTokena {
+    NUM, STR, BOOL, ID, PLUS, MINUS, MULT, DIV, LBRACKET, RBRACKET, ASSIGN, VAR, EQUAL, LESS, GREATER, ELESS, EGREATER, NEQUAL, FOR, IF, ELSE, ERR, EOF
+}
