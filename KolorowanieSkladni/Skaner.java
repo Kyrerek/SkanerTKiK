@@ -24,7 +24,7 @@ public class Skaner {
         KodTokena kodTokena = switch (ciag.charAt(i)) {
             case '+' -> {
                 i++;
-                if (ciag.charAt(i) == '+') {
+                if (i < ciag.length() && ciag.charAt(i) == '+') {
                     kodBuilder.append('+');
                     i++;
                     yield KodTokena.INC;
@@ -53,7 +53,7 @@ public class Skaner {
             }
             case '=' -> {
                 i++;
-                if (ciag.charAt(i) == '=') {
+                if (i < ciag.length() && ciag.charAt(i) == '=') {
                     kodBuilder.append('=');
                     i++;
                     yield KodTokena.EQUAL;
@@ -68,7 +68,7 @@ public class Skaner {
             }
             case '<' ->{
                 i++;
-                if (ciag.charAt(i) == '=') {
+                if (i < ciag.length() && ciag.charAt(i) == '=') {
                     kodBuilder.append('=');
                     i++;
                     yield KodTokena.ELESS;
@@ -77,7 +77,7 @@ public class Skaner {
             }
             case '>' ->{
                 i++;
-                if (ciag.charAt(i) == '=') {
+                if (i < ciag.length() && ciag.charAt(i) == '=') {
                     kodBuilder.append('=');
                     i++;
                     yield KodTokena.GREATER;
@@ -86,7 +86,7 @@ public class Skaner {
             }
             case '!' ->{
                 i++;
-                if (ciag.charAt(i) == '=') {
+                if (i < ciag.length() && ciag.charAt(i) == '=') {
                     kodBuilder.append('=');
                     i++;
                     yield KodTokena.NEQUAL;

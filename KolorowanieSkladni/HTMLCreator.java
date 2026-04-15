@@ -16,7 +16,7 @@ public class HTMLCreator {
         this.fileName = fileName;
     }
 
-    public void addStr(String str, Color color) {
+    public void addColorStr(String str, Color color) {
         String html = "<span style=\"color: " + toHex(color) + ";\">" + str + "</span>";
         contentBuilder.append(html);
     }
@@ -25,12 +25,18 @@ public class HTMLCreator {
         contentBuilder.append("<br>");
     }
 
+    public void addWhiteChars(String str) {
+        String html = "<span style=\"white-space: pre;\">" + str + "</span>";
+        contentBuilder.append(html);
+    }
 
-    public void createHTML() {
+
+    public void createHTML(int fontSize) {
+        String html = "<span style=\"font-size: " + fontSize + "px;\">" + contentBuilder.toString() + "</span>";
         try (Writer writer = new BufferedWriter(
                 new OutputStreamWriter(
                         new FileOutputStream(fileName), StandardCharsets.UTF_8))) {
-            writer.write(contentBuilder.toString());
+            writer.write(html);
         } catch (Exception e) {
             e.printStackTrace();
         }
