@@ -1,2 +1,10 @@
-2+3*(76+8/3)+ 3*(9-3)
-1+23+   4 * (1)
+var alfa = 21
+var beta223 = 2+2/10
+
+if (alfa == 2):
+    print("true")
+else:
+    print(false)
+
+for (var i = 0; i <= 20; i++):
+    beta223 = alfa + beta223 - i

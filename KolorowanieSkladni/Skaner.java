@@ -21,9 +21,14 @@ public class Skaner {
         StringBuilder kodBuilder = new StringBuilder();
         kodBuilder.append(ciag.charAt(i));
 
-        KodTokena kodTokena = switch (ciag.charAt(i)){
+        KodTokena kodTokena = switch (ciag.charAt(i)) {
             case '+' -> {
                 i++;
+                if (ciag.charAt(i) == '+') {
+                    kodBuilder.append('+');
+                    i++;
+                    yield KodTokena.INC;
+                }
                 yield KodTokena.PLUS;
             }
             case '-' -> {
@@ -46,23 +51,89 @@ public class Skaner {
                 i++;
                 yield KodTokena.RBRACKET;
             }
+            case '=' -> {
+                i++;
+                if (ciag.charAt(i) == '=') {
+                    kodBuilder.append('=');
+                    i++;
+                    yield KodTokena.EQUAL;
+                }
+                yield KodTokena.ASSIGN;
+            }
+            case '\"' ->{
+                pullStrings(kodBuilder);
+                i++;
+                kodBuilder.append('\"');
+                yield KodTokena.STR;
+            }
+            case '<' ->{
+                i++;
+                if (ciag.charAt(i) == '=') {
+                    kodBuilder.append('=');
+                    i++;
+                    yield KodTokena.ELESS;
+                }
+                yield KodTokena.LESS;
+            }
+            case '>' ->{
+                i++;
+                if (ciag.charAt(i) == '=') {
+                    kodBuilder.append('=');
+                    i++;
+                    yield KodTokena.GREATER;
+                }
+                yield KodTokena.GREATER;
+            }
+            case '!' ->{
+                i++;
+                if (ciag.charAt(i) == '=') {
+                    kodBuilder.append('=');
+                    i++;
+                    yield KodTokena.NEQUAL;
+                }
+                yield KodTokena.ERR;
+            }
+
             default -> {
                 if (Character.isLetter(ciag.charAt(i))) {
                     pullIds(kodBuilder);
-                    i++;
+                    if (kodBuilder.toString().equals("var")) {
+                        yield KodTokena.VAR;
+                    }
+                    if (kodBuilder.toString().equals("true") || kodBuilder.toString().equals("false")) {
+                        yield KodTokena.BOOL;
+                    }
+
+                    if  (kodBuilder.toString().equals("if")) {
+                        yield KodTokena.IF;
+                    }
+
+                    if  (kodBuilder.toString().equals("else")) {
+                        yield KodTokena.ELSE;
+                    }
+
+                    if  (kodBuilder.toString().equals("for")) {
+                        yield KodTokena.FOR;
+                    }
+
+                    if (kodBuilder.toString().equals("print")) {
+                        yield KodTokena.PRINT;
+                    }
+
                     yield KodTokena.ID;
                 }
 
                 if (Character.isDigit(ciag.charAt(i))) {
                     pullNums(kodBuilder);
-                    i++;
                     yield KodTokena.NUM;
                 }
 
-                kodBuilder.append(", na pozycji ").append(i);
+//                kodBuilder.append(", na pozycji ").append(i);
+                i++;
                 yield KodTokena.ERR;
             }
         };
+
 //        System.out.println(kodTokena + ": " + kodBuilder);
         return new Token(kodTokena, kodBuilder.toString());
     }
@@ -77,6 +148,16 @@ public class Skaner {
     private void pullIds(StringBuilder kodBuilder) {
         i++;
         while (i < ciag.length() && (Character.isLetter(ciag.charAt(i)) || Character.isDigit(ciag.charAt(i)))) {
+            kodBuilder.append(ciag.charAt(i++));
+            if (kodBuilder.toString().equals("var")) {
+                break;
+            }
+        }
+    }
+
+    private void pullStrings(StringBuilder kodBuilder) {
+        i++;
+        while (i < ciag.length() && ciag.charAt(i) != '\"') {
             kodBuilder.append(ciag.charAt(i++));
         }
     }

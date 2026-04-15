@@ -26,5 +26,7 @@ Tokeny:
 | FOR      | Pętla                               |
 | IF       | Sprawdzenie logiczne                |
 | ELSE     | Alternatyczne sprawdzenie logiczne  |
+| INC      | Inkrementacja                       |
+| PRINT    | Funkcja wypisania na terminal       |
 | ERR      | Nieznany token                      |
 | EOF      | Koniec ciągu tokenów                |
